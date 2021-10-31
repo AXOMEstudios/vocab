@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Log in to Vocab{% endblock %}
+
+{% block content %}
+
+<div class="columns is-fullwidth is-fullheight m-0 p-0 is-vcentered">
+  <div class="column p-5 m-0 has-background-white">
+    <figure class="image is-64x64">
+      <img src="/static/icon.png">
+    </figure>
+    <hr>
+    <h1 class="title">Sign in</h1>
+    <h2 class="subtitle">Please sign in to Vocab</h2>
+    <a href="{{g.AUTH_URL}}" class="button p-2 is-large is-fullwidth">
+    <span class="icon">
+      <img src="/static/img/axome.png">
+    </span>
+    <span class="has-text-grey">Sign in with AXOME</span>
+  </a><br>
+  <p>By signing in to Vocab, you agree to AXOME's <a href="https://policies.axome.repl.co/">Policies</a>.</p>
+  <hr>
+  <a href="/" class="button is-fullwidth is-violet-light">Cancel</a>
+    
+  </div>
+  <div class="column p-0 m-0 is-hidden-mobile">
+    <figure class="image is-login-page-image">
+      <img src="/static/img/login.png"
+    </figure>
+  </div>
+</div>
+
+{% endblock %}

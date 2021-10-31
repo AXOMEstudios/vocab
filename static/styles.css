@@ -1,0 +1,47 @@
+/* Overriders & Extensions */
+.button {
+  border-radius: 100vw !important;
+}
+
+.is-vocab {
+  background-color: #1c243a !important;
+  color: white;
+  border: none;
+  outline: none;
+}
+
+.is-vocab * {
+  color: white !important;
+}
+
+.text-vocab {
+  color: #01dea3 !important;
+}
+
+/* Dividers */
+
+.custom-shape-divider-bottom-1635675114 {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.custom-shape-divider-bottom-1635675114 svg {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 68px;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.custom-shape-divider-bottom-1635675114 .shape-fill {
+    fill: #1C243A;
+    padding: 0 !important;
+    margin: 0 !important;
+}

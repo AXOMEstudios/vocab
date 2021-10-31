@@ -7,7 +7,7 @@ cache = {}
 # https://auth.axome.de/signin?url=SOMETHING
 # Needed part of this url:         ^^^^^^^^^
 
-URL = ""
+URL = "https:%2F%2Fvocab.axome.repl.co%2Flogin%2Frun"
 
 if not URL:
   raise Exception("It looks like you forgot to specify the URL used at the button or link for signin in the client file. Visit auth.py and enter the proper URL.")
