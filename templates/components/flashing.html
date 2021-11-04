@@ -1,0 +1,13 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="section columns">
+    {% for category, message in messages %}
+    <div class="column">
+      <div class="notification is-light is-{{category}}">
+        {{message}}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+{% endwith %}
