@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Vocab!{% endblock %}
+
+{% block content %}
+
+<div class="columns is-fullwidth is-fullheight m-0 p-0 is-vcentered">
+  <div class="column p-5 m-0 has-background-white">
+    <figure class="image is-64x64">
+      <img src="/static/icon.png">
+    </figure>
+    <hr>
+    <h1 class="title">Welcome to Vocab!</h1>
+    <h2 class="subtitle">You have been signed up to vocab successfully.</h2>
+    <br>
+    <p>
+      Your Vocab account has now been created and is ready to use! Click on the button below to open the home screen, explore vocabulary sets and begin increasing your grades!
+    </p>
+    <hr>
+  <a href="/" class="button is-medium is-vocab is-fullwidth is-uppercase"><strong>Open homescreen</strong></a>
+    
+  </div>
+  <div class="column p-0 m-0 is-hidden-mobile">
+    <figure class="image is-login-page-image">
+      <img src="/static/img/login.png"
+    </figure>
+  </div>
+</div>
+
+{% endblock %}

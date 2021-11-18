@@ -45,3 +45,21 @@
     padding: 0 !important;
     margin: 0 !important;
 }
+
+html {
+  scroll-behavior: smooth !important;
+}
+
+#login-form {
+  position: fixed;
+  width: 50%;
+  padding: 1em;
+}
+
+@media screen and (max-width: 770px) {
+  #login-form {
+    position: relative;
+    width: 100%;
+    padding: 1em;
+  }
+}

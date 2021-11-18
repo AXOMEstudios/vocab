@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}New Vocab set{% endblock %}
+{% block meta_title %}Learn vocabulary with Vocab{% endblock %}
+{% block meta_description %}With vocab, you can easily learn hard vocabulary for free - no ads, tracking or similar!{% endblock %}
+
+{% block content %}
+{% include "components/all.html" %}
+
+<div class="section content columns is-vcentered">
+  <div class="column">
+    <h1 class="title is-1">New set</span></h1>
+    <h2 class="subtitle">Create a new set and make it publicly available to the vocab community to enhance the grades of everyone! Gain diamonds for your sets based on the feedback of the users, and much more!</h2>
+  </div>
+  <div class="column">
+    <div class="box">
+      <span class="tag is-success is-light is-medium">Preview</span>
+      <h1 class="title" id="preview-title">Example</h1>
+      <h2 class="subtitle is-4" id="preview-description">This is an example set preview. Start typing in the form to dismiss.</h2>
+    </div>
+  </div>
+</div>
+<hr>
+<section class="section content">
+  <form action="/new/set/run" method="post">
+    <input type="text" class="input is-link is-fullwidth is-medium" name="title" onchange="document.getElementById('preview-title').innerHTML = this.value;"><br>
+    <textarea class="input is-link is-fullwidth is-medium" name="description" onchange="document.getElementById('preview-description').innerHTML = this.value;"></textarea><br>
+    <div class="columns">
+      <div class="column content">
+        <h1>Please pick the languages this set features.</h1>
+        <p>Please pick both languages your vocabulary set features to create your new set.</p>
+      </div>
+      <div class="column">
+        <div class="control">
+          <label class="radio"><input type="radio" name="lang-from" checked value="english">English</label><br>
+          <label class="radio"><input type="radio" name="lang-from" value="spain">Spain</label><br>
+          <label class="radio"><input type="radio" name="lang-from" value="french">French</label><br>
+          <label class="radio"><input type="radio" name="lang-from" value="german">German</label><br>
+          <label class="radio"><input type="radio" name="lang-from" value="latin">Latin</label><br>
+        </div>
+      </div>
+      <div class="column">
+        <div class="control">
+          <label class="radio"><input type="radio" name="lang-to" value="english">English</label><br>
+          <label class="radio"><input type="radio" name="lang-to" value="spain">Spain</label><br>
+          <label class="radio"><input type="radio" name="lang-to" checked value="french">French</label><br>
+          <label class="radio"><input type="radio" name="lang-to" value="german">German</label><br>
+          <label class="radio"><input type="radio" name="lang-to" value="latin">Latin</label><br>
+        </div>
+      </div>
+    </div>
+    <input type="hidden" name="token" value="{{token}}">
+    <button type="submit" class="button is-vocab is-rounded is-fullwidth is-medium is-uppercase">Create vocabulary set</button>
+  </form>
+</section>
+
+{% endblock %}

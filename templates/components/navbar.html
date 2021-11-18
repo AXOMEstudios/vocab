@@ -12,13 +12,14 @@
     </div>
   
     <div id="navbarBasicExample" class="navbar-menu">
+      {% if g.user %}
       <div class="navbar-start">
-        <a class="navbar-item">
+        <a class="navbar-item" href="/">
           Home
         </a>
   
-        <a class="navbar-item">
-          Documentation
+        <a class="navbar-item" href="/explore">
+          Explore
         </a>
   
         <div class="navbar-item has-dropdown is-hoverable">
@@ -27,23 +28,33 @@
           </a>
   
           <div class="navbar-dropdown">
-            <a class="navbar-item">
-              About
+            <a class="navbar-item" href="https://policies.axome.repl.co/">
+              Policies
             </a>
-            <a class="navbar-item">
-              Jobs
-            </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="mailto:axomedev@gmail.com?subject=Support%20contact">
               Contact
             </a>
             <hr class="navbar-divider">
-            <a class="navbar-item">
+            <a class="navbar-item" href="https://forms.gle/s5h3FfoyTqKwPwEq5">
               Report an issue
             </a>
           </div>
         </div>
       </div>
-  
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button is-success" href="/new/set">
+              <strong>New set</strong>
+            </a>
+            <a class="button is-vocab" href="/explore">
+              <strong>Explore vocabulary</strong>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% else %}
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
@@ -53,5 +64,6 @@
           </div>
         </div>
       </div>
+      {% endif %}
     </div>
   </nav>

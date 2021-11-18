@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Vocab{% endblock %}
+{% block meta_title %}Learn vocabulary with Vocab{% endblock %}
+{% block meta_description %}With vocab, you can easily learn hard vocabulary for free - no ads, tracking or similar!{% endblock %}
+
+{% block content %}
+{% include "components/all.html" %}
+
+<div class="section content columns is-vcentered">
+  <div class="column">
+    <h1 class="title is-1"><span class="text-vocab">{{d["name"]}}</span></h1>
+    <h2 class="subtitle">{{d["description"]}}</h2>
+
+    <div class="columns">
+      <p class="column"><a href="/set/{{d['_id']}}/learn" class="button is-medium is-vocab is-fullwidth is-uppercase"><strong>Start training</strong></a></p>
+      <p class="column"><a href="#vocab-content" class="button is-medium is-fullwidth is-uppercase"><strong>Read content</strong></a></p>
+      
+    </div>
+  </div>
+  <div class="column">
+    <div class="box">
+      <span class="tag is-success is-light is-medium">Information about this set</span><br><br>
+      <p>
+        <strong>Title:</strong> {{d["name"]}}<br>
+        <strong>Description:</strong> {{d["description"]}}<br>
+        <strong>Author: </strong> {{d["author"]}}<br>
+        <strong>Languages: </strong> {{d["langs"][0]}}, {{d["langs"][1]}}
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="custom-shape-divider-bottom-1635675114">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+    </svg>
+</div>
+
+<section class="section is-vocab content" id="vocab-content">
+  <h1>Vocabulary</h1>
+  <table class="table is-vocab">
+    <thead>
+      <tr>
+        <th>{{d["langs"][0]}}</th>
+        <th>{{d["langs"][1]}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if d["vocab"] %}
+        {% for i in d["vocab"].items() %}
+          <tr>
+            <td>{{i[0]}}</td>
+            <td>{{i[0]}}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+            <td>The author didn't add vocabulary yet.</td>
+            <td></td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</section>
+
+{% endblock %}

@@ -4,8 +4,9 @@
 
 {% block content %}
 
-<div class="columns is-fullwidth is-fullheight m-0 p-0 is-vcentered">
-  <div class="column p-5 m-0 has-background-white">
+<div class="columns is-fullwidth is-fullheight m-0 p-0">
+  <div class="column m-0 has-background-white">
+    <div id="login-form">
     <figure class="image is-64x64">
       <img src="/static/icon.png">
     </figure>
@@ -18,14 +19,15 @@
     </span>
     <span class="has-text-grey">Sign in with AXOME</span>
   </a><br>
+  <a href="/login/run?guest=true" class="button is-fullwidth p-5"><strong>Continue as guest</strong></a><br>
   <p>By signing in to Vocab, you agree to AXOME's <a href="https://policies.axome.repl.co/">Policies</a>.</p>
   <hr>
-  <a href="/" class="button is-fullwidth is-violet-light">Cancel</a>
-    
+  <a onclick="window.history.back(1);" class="button is-fullwidth is-violet-light">Cancel</a>
+    </div>
   </div>
   <div class="column p-0 m-0 is-hidden-mobile">
     <figure class="image is-login-page-image">
-      <img src="/static/img/login.png"
+      <img src="/static/img/login.png">
     </figure>
   </div>
 </div>

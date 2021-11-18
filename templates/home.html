@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Vocab{% endblock %}
+{% block meta_title %}Learn vocabulary with Vocab{% endblock %}
+{% block meta_description %}With vocab, you can easily learn hard vocabulary for free - no ads, tracking or similar!{% endblock %}
+
+{% block content %}
+{% include "components/all.html" %}
+
+<div class="section content columns is-vcentered">
+  <div class="column">
+    <h1 class="title is-1">Hello, <span class="text-vocab">{{g.user}}</span></h1>
+    <h2 class="subtitle">Welcome back to Vocab! You can start learning vocabulary right now!</h2>
+
+    <div class="columns">
+      <p class="column"><a href="#my_sets" class="button is-medium is-vocab is-fullwidth is-uppercase"><strong>Start training</strong></a></p>
+      <p class="column"><a href="/explore" class="button is-medium is-fullwidth is-uppercase"><strong>Explore vocabulary</strong></a></p>
+      
+    </div>
+  </div>
+  <div class="column">
+    <div class="box">
+      <span class="tag is-success is-light is-medium">Recently learned</span><br><br>
+      {% if g.user != "vocabguest" %}
+        {% if recently %}
+          <h1 class="title">{{recently["name"]}}</h1>
+          <h2 class="subtitle">{{recently["description"]}}</h2>
+          <a href="/set/{{recently['_id']}}" class="button is-fullwidth is-rounded is-vocab">Learn now</a>
+        {% else %}
+          <h1 class="subtitle">No recent set learned.</h1>
+        {% endif %}
+      {% else %}
+        <article class="message is-danger">
+          <div class="message-body">
+            "Recently learned" can't be used when logged in as guest.<br><br>
+            <div class="columns"><div class="column is-three-quarters is-hidden-tablet"></div>
+            <div class="column"><a href="/login" class="button is-vocab is-fullwidth is-rounded">Unlock all features</a></div></div>
+          </div>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="custom-shape-divider-bottom-1635675114">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+    </svg>
+</div>
+
+<section class="section is-vocab content" id="my_sets">
+  <h1>Your sets</h1>
+  {% for sets in learning.items() %}
+    <h2>{{sets[0]}}</h2>
+    <ul>
+      {% for set in sets[1] %}
+        <li><a href="/set/{{set['id']}}">{{set["name"]}}</a></li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+</section>
+
+{% endblock %}
