@@ -1,0 +1,16 @@
+<form class="box">
+  <input class="input is-link is-rounded my-1" placeholder="{{d['langs'][0]}} word" id="add-word-from">
+  <input class="input is-link is-rounded my-1" placeholder="{{d['langs'][1]}} word" id="add-word-to">
+  <button class="button is-vocab is-rounded is-fullwidth" onclick="addVocabulary()" type="button">Add card</button>
+</form>
+<hr>
+<div id="cardContainer" class="is-editor-sidebar">
+{% for card in d["vocabs"] %}
+<div class="box is-clickable is-vocab" onclick="openCard('{{_list(card)[0]}}');">
+  <strong>
+    {{_list(card)[0]}}
+  </strong>
+  <button class="delete is-large" onclick="deleteCard('{{_list(card)[0]}}', this.parentElement)"></button>
+</div><br>
+{% endfor %}
+</div>

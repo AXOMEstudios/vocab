@@ -62,4 +62,12 @@ html {
     width: 100%;
     padding: 1em;
   }
+  .is-editor-sidebar {
+    max-height: 30vh;
+  }
+}
+
+.is-editor-sidebar {
+  overflow-y: scroll;
+  max-height: 90vh;
 }

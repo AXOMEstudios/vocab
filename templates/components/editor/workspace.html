@@ -1,0 +1,12 @@
+<div class="box is-fullwidth p-6 is-vocab">
+  <span class="tag is-primary is-large">Selected card</span>
+  {% if _list(d["vocabs"]) %}
+  <h1 class="title is-2" id="card-workspace-from">{{_list(d["vocabs"][0])[0]}}</h1>
+  <hr>
+  <h1 class="title is-2" id="card-workspace-to">{{d["vocabs"][0][_list(d["vocabs"][0])[0]]}}</h1>
+  {% else %}
+  <h1 class="title is-2" id="card-workspace-from">Add a card on the sidebar to begin.</h1>
+  <hr>
+  <h1 class="title is-2" id="card-workspace-to"></h1>
+  {% endif %}
+</div>

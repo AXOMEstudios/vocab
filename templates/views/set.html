@@ -14,7 +14,9 @@
 
     <div class="columns">
       <p class="column"><a href="/set/{{d['_id']}}/learn" class="button is-medium is-vocab is-fullwidth is-uppercase"><strong>Start training</strong></a></p>
-      <p class="column"><a href="#vocab-content" class="button is-medium is-fullwidth is-uppercase"><strong>Read content</strong></a></p>
+      {% if g.user == d["author"] %}
+      <p class="column"><a href="/editor/{{d['_id']}}" class="button is-medium is-fullwidth is-uppercase"><strong>Edit set</strong></a></p>
+      {% endif %}
       
     </div>
   </div>

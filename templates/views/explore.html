@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Vocab - explore{% endblock %}
+{% block meta_title %}Learn vocabulary with Vocab{% endblock %}
+{% block meta_description %}With vocab, you can easily learn hard vocabulary for free - no ads, tracking or similar!{% endblock %}
+
+{% block content %}
+{% include "components/all.html" %}
+
+<div class="section content is-vcentered">
+  <h1 class="title is-1"><span class="text-vocab">Explore</span> new sets</h1>
+  <h2 class="subtitle">Explore new vocabulary sets to start learning right now without typing them in manually all the time.</h2>
+
+  <div class="columns">
+    <p class="column"><a href="#explore_sets" class="button is-medium is-vocab is-fullwidth is-uppercase"><strong>Explore</strong></a></p>
+    <p class="column"><a href="/new/set" class="button is-medium is-fullwidth is-uppercase"><strong>Create new set</strong></a></p>
+    
+  </div>
+</div>
+
+<div class="custom-shape-divider-bottom-1635675114">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+    </svg>
+</div>
+
+<section class="section is-vocab content" id="explore_sets">
+  <h1>Explore sets</h1>
+  {% for set in sets %}
+  <div class="box is-dark">
+    <h2>{{set["name"]}}</h2>
+    <h4>{{set["description"]}}</h4>
+    
+  </div>
+  {% endfor %}
+</section>
+
+{% endblock %}

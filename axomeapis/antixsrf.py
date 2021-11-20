@@ -17,11 +17,11 @@ def createEndpoint(user, action):
 
   return data[action][user]
 
-def validateEndpoint(token, user, action):
+def validateEndpoint(token, user, action, delete=True):
   if not action in data.keys():
     return False
   if token != data[action][user]:
-    del data[action][user]
+    if delete: del data[action][user]
     return False
-  del data[action][user]
+  if delete: del data[action][user]
   return True
