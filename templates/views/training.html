@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Vocab training{% endblock %}
+{% block meta_title %}Learn vocabulary with Vocab{% endblock %}
+{% block meta_description %}With vocab, you can easily learn hard vocabulary for free - no ads, tracking or similar!{% endblock %}
+
+{% block content %}
+{% include "components/navbar.html" %}
+
+<div class="hero is-vocab is-fullheight">
+  <div class="hero-body">
+    <div class="columns is-vcentered" style="width: 100%;">
+      <div class="column has-text-centered">
+        <div class="box content m-6" style="display: inline-block !important;">
+          <h1 class="has-text-black">Start training</h1>
+          <h4 class="has-text-black">Start the vocabulary training with the set</h4>
+          <h2 class="has-text-black">{{d["name"]}}</h2>
+          <hr>
+          <h4 class="has-text-black">Select a gamemode.</h4>
+          <div class="columns is-vcentered">
+            <div class="column"><a href="/learn/{{d['_id']}}/cards" class="title is-4 button px-3 py-4 is-fullwidth is-success">Learn with cards</a></div>
+            <div class="column"><a href="/learn/{{d['_id']}}/knowledge" class="title is-4 button px-3 py-4 is-fullwidth is-warning">Test knowledge</a></div>
+            <div class="column"><a href="/learn/{{d['_id']}}/quiz" class="title is-4 button px-3 py-4 is-fullwidth is-danger">Do a quiz</a></div>
+            <div class="column"><a href="/learn/{{d['_id']}}/test" class="title is-4 button px-3 py-4 is-fullwidth is-vocab">Write a test</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

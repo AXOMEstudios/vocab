@@ -23,8 +23,8 @@
 <hr>
 <section class="section content">
   <form action="/new/set/run" method="post">
-    <input type="text" class="input is-link is-fullwidth is-medium" name="title" onchange="document.getElementById('preview-title').innerHTML = this.value;"><br>
-    <textarea class="input is-link is-fullwidth is-medium" name="description" onchange="document.getElementById('preview-description').innerHTML = this.value;"></textarea><br>
+    <input type="text" class="input is-link is-fullwidth is-medium" name="title" onchange="document.getElementById('preview-title').innerHTML = this.value;" placeholder="Enter the title here."><br>
+    <textarea class="input is-link is-fullwidth is-medium" name="description" onchange="document.getElementById('preview-description').innerHTML = this.value;" placeholder="Enter a description here."></textarea><br>
     <div class="columns">
       <div class="column content">
         <h1>Please pick the languages this set features.</h1>
@@ -52,7 +52,7 @@
     <input type="hidden" name="token" value="{{token}}">
     <button type="submit" class="button is-vocab is-rounded is-fullwidth is-medium is-uppercase">Create vocabulary set</button>
   </form>
-  <h1 class="subtitle has-text-danger">This set will be publicly available.</h1>
+  <h1 class="subtitle is-5 has-text-danger">This set will be publicly available.</h1>
 </section>
 
 {% endblock %}

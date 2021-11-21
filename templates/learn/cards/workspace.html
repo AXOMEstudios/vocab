@@ -5,11 +5,10 @@
   <hr>
   <h1 class="title is-2" id="card-workspace-to">{{d["vocabs"][0][1]}}</h1>
   {% else %}
-  <h1 class="title is-2" id="card-workspace-from">Add a card on the sidebar to begin.</h1>
+  <h1 class="title is-2" id="card-workspace-from">No cards in this set available.</h1>
   <hr>
   <h1 class="title is-2" id="card-workspace-to"></h1>
   {% endif %}
 </div>
 
-<a href="/editor/{{d['_id']}}/leave" class="button is-warning is-light is-fullwidth">Leave editor</a><br>
-<a onclick="tMdl('#deleteSetModal')" class="button is-danger is-light is-fullwidth">Delete set</a>
+<a href="/set/{{d['_id']}}/learn" class="button is-dark is-fullwidth has-text-white">Leave learning mode</a><br>

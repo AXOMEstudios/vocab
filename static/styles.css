@@ -14,6 +14,10 @@
   color: white !important;
 }
 
+.is-vocab .has-text-black {
+  color: black !important;
+}
+
 .text-vocab {
   color: #01dea3 !important;
 }

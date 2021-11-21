@@ -1,0 +1,9 @@
+<div id="cardContainer" class="is-editor-sidebar">
+{% for card in d["vocabs"] %}
+<div class="box is-clickable is-vocab" onclick="openCard('{{card[0]}}');">
+  <strong>
+    {{card[0]}}
+  </strong>
+</div><br>
+{% endfor %}
+</div>

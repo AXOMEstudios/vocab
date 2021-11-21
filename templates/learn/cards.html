@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Vocab training - cards{% endblock %}
+{% block meta_title %}Learn vocabulary with Vocab{% endblock %}
+{% block meta_description %}With vocab, you can easily learn hard vocabulary for free - no ads, tracking or similar!{% endblock %}
+
+{% block content %}
+{% include "components/all.html" %}
+
+<div class="is-vocab" style="min-height: 100vh;">
+  <div class="p-3" id="errorMessageContainer"></div>
+
+  <div class="section columns">
+    <div class="column is-one-third">
+      {% include "learn/cards/sidebar.html" %}
+    </div>
+    <div class="column">
+      {% include "learn/cards/workspace.html" %}
+    </div>
+  </div>
+
+  <script>
+    {% include "learn/learn.js" %}
+  </script>
+</div>
+{% endblock %}

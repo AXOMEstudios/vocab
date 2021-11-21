@@ -4,6 +4,7 @@ import axomeapis.auth as auth
 import axomeapis.antixsrf as antixsrf
 import pymongo, threading, requests, json
 from bson import ObjectId
+from axomeapis import emoji as emoji
 
 def pingAuth():
   requests.get("https://auth.axome.de/")
@@ -14,7 +15,7 @@ app.config["SECRET_KEY"] = getenv("SECRET_KEY")
 
 client = pymongo.MongoClient("mongodb+srv://vocab-server:"+getenv("DB_SECRET")+"@axodb01.kpdbk.mongodb.net/Vocab?retryWrites=true&w=majority")
 
-app.jinja_env.globals.update(_list=list)
+app.jinja_env.globals.update(_list=list, emoji=emoji.emoji)
 
 db = client["Vocab"]
 users = db["users"]
@@ -25,8 +26,8 @@ data = db["data"]
 
 def getVocabulary(voc, arr):
   for i in arr:
-    if list(i)[0] == voc:
-      return i[list(i)[0]]
+    if i[0] == voc:
+      return i[1]
   else:
     return "This card has been deleted."
 
@@ -55,7 +56,11 @@ def index():
   if g.user:
     d = getUser(g.user)
     i = getData(g.user)
-    return render_template("home.html", learning=d["learning"], recently=d["recent"], diamonds=i["diamonds"])
+    learning = list(sets.find({"_id": {"$in": d["learning"]}}, {"name": 1, "description": 1, "langs": 1, "author": 1}))
+    recently = (sets.find_one({"_id": d["learning"][-1]}, {"name": 1, "description": 1, "langs": 1, "author": 1}) if d["learning"] else {})
+    sets2 = sets.find({"author": g.user}, {"name": 1, "description": 1, "langs": 1})
+
+    return render_template("home.html", diamonds=i["diamonds"], learning=learning, recently=recently, sets=sets2)
   return render_template("index.html")
 
 @app.route("/login")
@@ -75,8 +80,7 @@ def login_run():
     users.insert_one({
       "name": g.user,
       "bio": "Hello, I'm @"+g.user,
-      "sets": [],
-      "learning": {},
+      "learning": [],
       "recent": ""
     })
     data.insert_one({
@@ -144,24 +148,50 @@ def set_view(i):
   d = sets.find_one({
     "_id": ObjectId(i)
   })
-  return render_template("/views/set.html", d=d)
+  if g.user:
+    starred = ObjectId(i) in users.find_one({
+      "name": g.user
+    })["learning"]
+  else:
+    starred = False
+  token = antixsrf.createEndpoint(g.user, "star-set")
+  return render_template("/views/set.html", d=d, token=token, starred=starred)
+
+@app.route("/set/<i>/learn")
+def set_learn_start(i):
+  d = sets.find_one({
+    "_id": ObjectId(i)
+  }, {"name": 1})
+  return render_template("/views/training.html", d=d)
+
+@app.route("/set/<i>/star")
+def star_set(i):
+  if not g.user:
+    return redirect("/login")
+  if not antixsrf.validateEndpoint(request.args["token"], g.user, "star-set"):
+    flash("Invalid security key", "danger")
+    return redirect("/set/"+i)
+  
+  isInStarred = ObjectId(i) in users.find_one({"name": g.user})["learning"]
+  users.update_one({"name": g.user}, {("$pull" if isInStarred else "$push"): {"learning": ObjectId(i)}})
+  flash(("Unstarred" if isInStarred else "Starred")+" set successfully.", "success")
+  return redirect("/set/"+i)
 
 ### EDITOR ###
-
-open_editors = []
 
 @app.route("/editor/<i>")
 def editor(i):
   s = sets.find_one({
     "_id": ObjectId(i)
   })
-  open_editors.append(g.user)
-  return render_template("views/editor.html", d = s, token=antixsrf.createEndpoint(g.user, "add-vocabulary-card"))
+  return render_template("views/editor.html", d = s, token=antixsrf.createEndpoint(g.user, "edit-vocabulary"))
 
 @app.route("/editor/<i>/api", methods=["POST"])
 def editor_api(i):
   d = json.loads(request.data)
-  if not antixsrf.validateEndpoint(d["token"], g.user, "add-vocabulary-card", False):
+  if g.user != sets.find_one({"_id": ObjectId(i)}, {"author": 1})["author"]:
+    return "Not permitted", 403
+  if not antixsrf.validateEndpoint(d["token"], g.user, "edit-vocabulary", False):
     return "Invalid security key. Reload the page.", 400
   if d["action"] == "add-card":
     if (not d["fr"]) or (not d["to"]):
@@ -170,9 +200,9 @@ def editor_api(i):
       "_id": ObjectId(i)
     }, {
       "$push": {
-        "vocabs": {
-          d["fr"]: d["to"]
-        }
+        "vocabs": [
+          d["fr"], d["to"]
+        ]
       }
     })
   if d["action"] == "get-card":
@@ -184,17 +214,66 @@ def editor_api(i):
     sets.update_one({
       "_id": ObjectId(i)
     }, {
-      "$pull":
-        {"vocabs":
-          {d["card"]:
-            {"$exists": True}
-          }
-        }
+      "$pull": {"vocabs": [
+          d["card"], getVocabulary(d["card"], sets.find_one({
+            "_id": ObjectId(i)
+          })["vocabs"])
+        ]
+      }
     })
 
   return "success"
 
+@app.route("/editor/<i>/leave")
+def editor_leave(i):
+  del antixsrf.data["edit-vocabulary"][g.user]
+  return redirect("/set/"+i)
+
+@app.route("/editor/<i>/delete")
+def delete_vocab_set(i):
+  if g.user != sets.find_one({"_id": ObjectId(i)}, {"author": 1})["author"]:
+    flash("Not permitted.", "danger")
+    return redirect("/set/"+i)
+  if antixsrf.validateEndpoint(request.args["token"], g.user, "edit-vocabulary"):
+    sets.delete_one({"_id": ObjectId(i)})
+    flash("Set successfully deleted.", "danger")
+    return redirect("/")
+  else:
+    flash("Invalid security key. Try again.", "danger")
+  return redirect("/set/"+i)
+
 ### EXPLORE ###
 
+@app.route("/explore")
+def explore_sets():
+  s = list(sets.find({}, {"name": 1, "description": 1, "langs": 1, "author": 1}, limit=5))
+  return render_template("views/explore.html", sets=reversed(s))
+
+
+### LEARN ###
+
+@app.route("/learn/<i>/cards")
+def learn_cards(i):
+  d = sets.find_one({
+    "_id": ObjectId(i)
+  })
+  return render_template("learn/cards.html", d=d)
+
+@app.route("/learn/<i>/knowledge")
+def test_knowledge(i):
+  d = sets.find_one({
+    "_id": ObjectId(i)
+  })
+  return render_template("learn/knowledge.html", d=d)
+
+@app.route("/learn/<i>/api", methods=["POST"])
+def learn_api(i):
+  d = json.loads(request.data)
+  if d["action"] == "get-card":
+    return getVocabulary(d["fr"], sets.find_one({
+      "_id": ObjectId(i)
+    })["vocabs"])
+
+  return "success"
 
 app.run(host="0.0.0.0", port=8080)

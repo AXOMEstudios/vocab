@@ -13,7 +13,7 @@
     <h2 class="subtitle">Welcome back to Vocab! You can start learning vocabulary right now!</h2>
 
     <div class="columns">
-      <p class="column"><a href="#my_sets" class="button is-medium is-vocab is-fullwidth is-uppercase"><strong>Start training</strong></a></p>
+      <p class="column"><a href="#starred_sets" class="button is-medium is-vocab is-fullwidth is-uppercase"><strong>Start training</strong></a></p>
       <p class="column"><a href="/explore" class="button is-medium is-fullwidth is-uppercase"><strong>Explore vocabulary</strong></a></p>
       
     </div>
@@ -48,15 +48,32 @@
     </svg>
 </div>
 
+<section class="section is-vocab content my-0" id="starred_sets">
+  <h1>Sets you starred</h1>
+  {% for set in learning %}
+    <a href="/set/{{set['_id']}}">
+      <div class="box has-background-dark">
+        <h2>{{set["name"]}}</h2>
+        <h4>{{set["description"]}}</h4>
+        Languages: {{emoji(set["langs"][0])}} {{set["langs"][0]}}, {{emoji(set["langs"][1])}} {{set["langs"][1]}}<br>
+        Author: {{set["author"]}}
+      </div>
+    </a>
+  {% endfor %}
+</section>
+
 <section class="section is-vocab content" id="my_sets">
+  <hr>
   <h1>Your sets</h1>
-  {% for sets in learning.items() %}
-    <h2>{{sets[0]}}</h2>
-    <ul>
-      {% for set in sets[1] %}
-        <li><a href="/set/{{set['id']}}">{{set["name"]}}</a></li>
-      {% endfor %}
-    </ul>
+  {% for set in sets %}
+    <a href="/set/{{set['_id']}}">
+      <div class="box has-background-dark">
+        <h2>{{set["name"]}}</h2>
+        <h4>{{set["description"]}}</h4>
+        Languages: {{emoji(set["langs"][0])}} {{set["langs"][0]}}, {{emoji(set["langs"][1])}} {{set["langs"][1]}}<br>
+        Author: You
+      </div>
+    </a>
   {% endfor %}
 </section>
 

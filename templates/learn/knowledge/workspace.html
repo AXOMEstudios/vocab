@@ -1,0 +1,42 @@
+<div class="box is-fullwidth p-6 is-vocab">
+  <span class="tag is-primary is-large">Selected card</span>
+  {% if d["vocabs"] %}
+  <h1 class="title is-2" id="card-workspace-from">{{d["vocabs"][0][0]}}</h1>
+  <hr>
+  <div id="do-you-know" class="content">
+    <h2>Do you know the translation?</h2>
+    <div class="columns">
+      <div class="column">
+        <button class="button is-success is-fullwidth p-5" onclick="doYouKnow()"><strong class="subtitle is-3">Yes</strong></button>
+      </div>
+      <div class="column">
+        <button class="button is-danger is-fullwidth p-5" onclick="doYouKnow('n')"><strong class="subtitle is-3">No</strong></button>
+      </div>
+    </div>
+  </div>
+    <h1 class="title is-1 is-hidden has-text-success" id="card-workspace-to">{{d["vocabs"][0][1]}}</h1>
+    <div id="was-that-correct" class="content is-hidden">
+    <h2>Was that correct?</h2>
+    <div class="columns">
+      <div class="column">
+        <button class="button is-success is-fullwidth p-5" onclick="wasThatCorrect()"><strong class="subtitle is-3">Yes</strong></button>
+      </div>
+      <div class="column">
+        <button class="button is-danger is-fullwidth p-5" onclick="wasThatCorrect('n')"><strong class="subtitle is-3">No</strong></button>
+      </div>
+    </div>
+  </div>
+    <div id="type-it-correct" class="is-hidden">
+      <h2>Type the translation <strong>exactly</strong> the same.</h2>
+      <input id="type-prompt-1" class="input is-large is-link is-fullwidth has-text-black" placeholder="Type the exact same word."><br>
+      <button class="button is-primary is-medium is-fullwidth" onclick="submitRepeatWriting()">Submit</button>
+    </div>
+    <button id="continue-button" class="is-hidden is-fullwidth is-dark" onclick="continueLearning()">
+      <h1 class="subtitle">Continue</h1>
+    </button>
+  {% else %}
+  <h1 class="title is-2" id="card-workspace-from">No cards in this set available.</h1>
+  {% endif %}
+</div>
+
+<a href="/set/{{d['_id']}}/learn" class="button is-dark is-fullwidth has-text-white">Leave learning mode</a><br>

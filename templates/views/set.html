@@ -17,6 +17,13 @@
       {% if g.user == d["author"] %}
       <p class="column"><a href="/editor/{{d['_id']}}" class="button is-medium is-fullwidth is-uppercase"><strong>Edit set</strong></a></p>
       {% endif %}
+      <p class="column"><a href="/set/{{d['_id']}}/star?token={{token}}" class="button is-medium is-fullwidth">
+      {% if starred %}
+         &#9940; Unstar
+      {% else %}
+        &#11088; Star
+      {% endif %}
+      </a></p>
       
     </div>
   </div>
@@ -27,7 +34,7 @@
         <strong>Title:</strong> {{d["name"]}}<br>
         <strong>Description:</strong> {{d["description"]}}<br>
         <strong>Author: </strong> {{d["author"]}}<br>
-        <strong>Languages: </strong> {{d["langs"][0]}}, {{d["langs"][1]}}
+        <strong>Languages: </strong> {{emoji(d["langs"][0])}} {{d["langs"][0]}}, {{emoji(d["langs"][1])}} {{d["langs"][1]}}
       </p>
     </div>
   </div>
@@ -49,11 +56,11 @@
       </tr>
     </thead>
     <tbody>
-      {% if d["vocab"] %}
-        {% for i in d["vocab"].items() %}
+      {% if d["vocabs"] %}
+        {% for i in d["vocabs"] %}
           <tr>
             <td>{{i[0]}}</td>
-            <td>{{i[0]}}</td>
+            <td>{{i[1]}}</td>
           </tr>
         {% endfor %}
       {% else %}

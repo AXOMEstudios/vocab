@@ -35,4 +35,17 @@
   <a class="modal-close is-large" aria-label="close" href="/set/{{d['_id']}}"></a>
 </div>
 {% endif %}
+
+<div class="modal" id="deleteSetModal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="box has-background-danger content">
+      <h1 class="has-text-white">Delete this set?</h1>
+      <p class="has-text-white">By deleting this set, it will get unavailable forever and cannot be used by anyone anymore. You will not be able to recover it.</p>
+      <button class="button is-vocab" onclick="tMdl('#deleteSetModal')">Cancel</button>
+      <a href="/editor/{{d['_id']}}/delete?token={{token}}" class="button">Delete</a>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close" onclick="tMdl('#deleteSetModal')"></button>
+</div>
 {% endblock %}

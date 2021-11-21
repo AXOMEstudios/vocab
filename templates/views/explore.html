@@ -27,11 +27,14 @@
 <section class="section is-vocab content" id="explore_sets">
   <h1>Explore sets</h1>
   {% for set in sets %}
-  <div class="box is-dark">
-    <h2>{{set["name"]}}</h2>
-    <h4>{{set["description"]}}</h4>
-    
-  </div>
+  <a href="/set/{{set['_id']}}">
+    <div class="box has-background-dark">
+      <h2>{{set["name"]}}</h2>
+      <h4>{{set["description"]}}</h4>
+      Languages: {{emoji(set["langs"][0])}} {{set["langs"][0]}}, {{emoji(set["langs"][1])}} {{set["langs"][1]}}<br>
+      Author: {{set["author"]}}
+    </div>
+  </a>
   {% endfor %}
 </section>
 
